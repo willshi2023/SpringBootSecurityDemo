@@ -15,9 +15,22 @@ zhangsan用户有user权限，账户/密码/权限分别是zhangsan/123456/USER
 如果有角色认证的话，需要ADMIN权限的地方张三是无法进入的  
 ![角色不相同的被禁止](other/image/角色不相同的被禁止.png)  
 <font color=red>说明：以上都是简单版本，不适用于生产环境，但是可以拿来在小组中使用，仅小组成员通过</font>  
+##### 数据库实现登陆的demo版本：增加角色控制  
+实现从数据库中读取用户和角色，控制不同角色的用户的访问权限  
+在数据库中，zhangsan是user用户，admin是admin角色  
+未登录时能访问的页面包括："/","/login","/logout"  
+登陆时能访问的页面包括："/hello"  
+需要admin角色才能访问的页面包括："/roleAuth"  
 # 接口  
 访问首页{"","/","","$String"}  
 访问欢迎页{"","/hello","","$String"}  
 访问登陆页{"","/login","",""}  
 访问注销页{"","/logout","","$String"}  
 访问admin权限页{"","/roleAuth","","$String"}  
+# 表结构  
+user用户表  
+![user](other/image/user.png)  
+role角色表  
+![role](other/image/role.png)  
+user_role用户角色表  
+![user_role](other/image/user_role.png)  
