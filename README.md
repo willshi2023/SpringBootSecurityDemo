@@ -1,7 +1,6 @@
 # springsecurity学习笔记  
-### 参考文章
-https://blog.csdn.net/u013435893/article/details/79605239  
-https://blog.csdn.net/u013435893/article/details/79596628  
-# 接口
-访问用户{"","/user","","$String"}  
-任何用户都可以访问，只需要输入123456密码就可以  
+### 最简单的demo版本
+访问首页的时候不需要认证，访问欢迎页需要security认证  
+# 接口  
+访问首页{"","/","","$String"}  
+访问欢迎页{"","/hello","","$String"}  
