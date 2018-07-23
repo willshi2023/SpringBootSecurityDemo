@@ -1,5 +1,7 @@
 package com.example.demo.conf;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,10 +9,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web
@@ -34,7 +40,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication()//设置一个内存中的用户密码，早期的版本不需要设置密码登陆，springsecurity5之后需要
-				.passwordEncoder(new BCryptPasswordEncoder()).withUser("admin")
-				.password(new BCryptPasswordEncoder().encode("123456")).roles("ADMIN");
+				.passwordEncoder(passwordEncoder).withUser("admin")
+				.password(passwordEncoder.encode("123456")).roles("ADMIN")
+				.and()
+				.passwordEncoder(passwordEncoder).withUser("zhangsan")
+				.password(passwordEncoder.encode("123456")).roles("USER");
+	}
+	
+	/**
+	 * 手动在拦截器中配置注册一个单例的bean对象，避免每次都重新生成
+	 * @return
+	 */
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }
