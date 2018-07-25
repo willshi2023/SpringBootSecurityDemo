@@ -1,4 +1,15 @@
 # springsecurity学习笔记  
+### 参考文章  
+SpringSide 3 中的安全框架  
+详细介绍springsecurity早期版本的设计思路，对理解springsecurity有很大帮助  
+http://www.blogjava.net/youxia/archive/2008/12/07/244883.html  
+Spring boot+Spring Security 4配置整合实例  
+https://blog.csdn.net/code__code/article/details/53885510  
+springBoot+springSecurity 数据库动态管理用户、角色、权限（二）  
+https://blog.csdn.net/u012373815/article/details/54633046  
+### 图示参数  
+![spring security的简单原理](other/image/spring security的简单原理.png)  
+![springsecurity流程图](other/image/springsecurity流程图.png)  
 ### 版本推进  
 说明：版本的推进代码请查看代码历史版本  
 ##### 最简单的demo版本  
@@ -34,3 +45,18 @@ role角色表
 ![role](other/image/role.png)  
 user_role用户角色表  
 ![user_role](other/image/user_role.png)  
+# 其他  
+maven报错  
+由于平时经常会去git上面下载一些demo来做参考，常常会通过maven仓库下载jar包，之前配置的阿里云的仓库，但是可能是因为公司的原因，导致这边的网速特别慢  
+我手动访问了http://maven.aliyun.com/nexus/content/groups/public/ 仓库地址，发现需要好多秒才能打开，maven下载有时间判定，  
+如果超过一定时间就不会下载了，所以我在网上找了几个maven地址，挑几个测试了下，修改后远程仓库后，发现瞬间快了很多，下面这些是地址，大家可以看着修改  
+Jcenter http://jcenter.bintray.com/  
+Jboss http://repository.jboss.org/nexus/content/groups/public/  
+Maven Central http://repo2.maven.org/maven2/  
+Ibiblio http://mirrors.ibiblio.org/pub/mirrors/maven2  
+UK Maven http://uk.maven.org/maven2/  
+OSCHINA http://maven.oschina.net/  
+aliyun http://maven.aliyun.com/nexus/content/groups/public/  
+maven报错的话，手动去找对应的jar包，删除掉所在的目录，然后mavenupdate一下就ok了  
+![maven报错修复1](other/image/maven报错修复1.png)  
+![maven报错修复2](other/image/maven报错修复2.png)  
