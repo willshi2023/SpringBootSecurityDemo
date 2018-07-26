@@ -5,7 +5,7 @@ package com.example.demo.pojo;
  * @author Administrator
  *
  */
-public class UserRole {
+public class Role {
 	private Long id;
 	private String name;
 	public Long getId() {

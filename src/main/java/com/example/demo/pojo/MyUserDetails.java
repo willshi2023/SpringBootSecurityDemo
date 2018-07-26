@@ -13,9 +13,9 @@ public class MyUserDetails extends User implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private List<UserRole> roles;
+	private List<Role> roles;
 	
-	public MyUserDetails(User user,List<UserRole> roles) {
+	public MyUserDetails(User user,List<Role> roles) {
 		super(user);
 		this.roles = roles;
 	}
@@ -26,7 +26,7 @@ public class MyUserDetails extends User implements UserDetails {
 			return AuthorityUtils.commaSeparatedStringToAuthorityList("");
 		}
 		StringBuilder commaBuilder = new StringBuilder();
-        for(UserRole role : roles){
+        for(Role role : roles){
             commaBuilder.append("ROLE_"+role.getName()).append(",");
         }
         String authorities = commaBuilder.substring(0,commaBuilder.length()-1);

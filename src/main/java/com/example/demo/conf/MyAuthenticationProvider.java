@@ -12,23 +12,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.pojo.MyUserDetails;
-import com.example.demo.service.MyUserService;
+import com.example.demo.service.MyUserDetailService;
 
 /**
- * 自定义验证方式
+ * 自定义用户名和密码验证
  * @author Administrator
  *
  */
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
-	private MyUserService myUserService;
+	private MyUserDetailService myUserDetailService;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String password = (String) authentication.getCredentials();
-		MyUserDetails user = (MyUserDetails) myUserService.loadUserByUsername(username);
+		MyUserDetails user = (MyUserDetails) myUserDetailService.loadUserByUsername(username);
 		if(user==null) {
 			throw new BadCredentialsException("用户名未找到");
 		}

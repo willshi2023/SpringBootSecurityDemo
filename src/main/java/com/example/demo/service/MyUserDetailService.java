@@ -12,7 +12,7 @@ import com.example.demo.dao.UserDao;
 import com.example.demo.dao.UserRoleDao;
 import com.example.demo.pojo.MyUserDetails;
 import com.example.demo.pojo.User;
-import com.example.demo.pojo.UserRole;
+import com.example.demo.pojo.Role;
 
 /**
  * 配置springsecurity数据库管理的类
@@ -20,7 +20,7 @@ import com.example.demo.pojo.UserRole;
  *
  */
 @Component
-public class MyUserService implements UserDetailsService {
+public class MyUserDetailService implements UserDetailsService {
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -34,7 +34,7 @@ public class MyUserService implements UserDetailsService {
 				throw new UsernameNotFoundException(username);
 			}
 			Long userId = user.getId();
-			List<UserRole> roles = userRoleDao.getRolesByUserId(userId);
+			List<Role> roles = userRoleDao.getRolesByUserId(userId);
 			return new MyUserDetails(user,roles);
 	}
 

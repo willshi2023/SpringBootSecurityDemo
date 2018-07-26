@@ -1,11 +1,15 @@
 package com.example.demo.conf;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * springsecurity的自定义配置类
@@ -18,7 +22,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //	private PasswordEncoder passwordEncoder;
 //	
 //	@Autowired
-//	private MyUserService myUserService;
+//	private MyUserDetailService myUserDetailService;
 	
 	@Autowired
     private MyAuthenticationProvider provider;//自定义验证
@@ -42,6 +46,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.disable();
 	}
 	
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //		auth
@@ -52,15 +58,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.passwordEncoder(passwordEncoder).withUser("zhangsan")
 //				.password(passwordEncoder.encode("123456")).roles("USER");
 		auth.authenticationProvider(provider);
+
+		//指定密码加密所使用的加密器为passwordEncoder()
+		//需要将密码加密后写入数据库 
+//		auth.userDetailsService(myUserDetailService).passwordEncoder(passwordEncoder);
+		//不删除凭据，以便记住用户
+		auth.eraseCredentials(false);
 	}
 	
 	/**
 	 * 手动在拦截器中配置注册一个单例的bean对象，避免每次都重新生成
 	 * @return
 	 */
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }

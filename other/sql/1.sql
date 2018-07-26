@@ -1,6 +1,6 @@
 /*
-SQLyog v10.2 
-MySQL - 5.5.60 : Database - test
+SQLyog Ultimate v11.22 (64 bit)
+MySQL - 5.7.22-log : Database - test
 *********************************************************************
 */
 
@@ -16,6 +16,20 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`test` /*!40100 DEFAULT CHARACTER SET ut
 
 USE `test`;
 
+/*Table structure for table `resource` */
+
+DROP TABLE IF EXISTS `resource`;
+
+CREATE TABLE `resource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '资源表id',
+  `url` text COMMENT '资源链接',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+/*Data for the table `resource` */
+
+insert  into `resource`(`id`,`url`) values (1,'/admin'),(2,'/user'),(3,'/hello'),(4,'/');
+
 /*Table structure for table `role` */
 
 DROP TABLE IF EXISTS `role`;
@@ -29,6 +43,21 @@ CREATE TABLE `role` (
 /*Data for the table `role` */
 
 insert  into `role`(`id`,`name`) values (1,'USER'),(2,'ADMIN');
+
+/*Table structure for table `role_resource` */
+
+DROP TABLE IF EXISTS `role_resource`;
+
+CREATE TABLE `role_resource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色资源中间表id',
+  `role_id` bigint(20) DEFAULT NULL,
+  `resource_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+/*Data for the table `role_resource` */
+
+insert  into `role_resource`(`id`,`role_id`,`resource_id`) values (1,1,2),(2,1,3),(4,2,1),(5,2,2),(6,2,3);
 
 /*Table structure for table `user` */
 

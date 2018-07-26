@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 
-import com.example.demo.pojo.UserRole;
+import com.example.demo.pojo.Role;
 
 /**
  * 用户角色中间表的dao类
@@ -21,6 +21,6 @@ public interface UserRoleDao {
 	@Select("SELECT r.id,r.name FROM user_role ur\r\n" + 
 			"LEFT JOIN role r ON ur.`role_id`=r.`id`\r\n" + 
 			"WHERE ur.id=#{userId}")
-	public List<UserRole> getRolesByUserId(Long userId);
+	public List<Role> getRolesByUserId(Long userId);
 	
 }
