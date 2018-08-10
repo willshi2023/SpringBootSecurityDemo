@@ -1,4 +1,4 @@
-# springsecurity学习笔记  
+# springsecurity  
 ### 参考文章  
 SpringSide 3 中的安全框架  
 详细介绍springsecurity早期版本的设计思路，对理解springsecurity有很大帮助  
@@ -69,7 +69,7 @@ user_role用户角色表
 role_resource角色资源表  
 ![role_resource](other/image/role_resource.png)  
 # 其他  
-maven报错  
+### maven报错解决办法  
 由于平时经常会去git上面下载一些demo来做参考，常常会通过maven仓库下载jar包，之前配置的阿里云的仓库，但是可能是因为公司的原因，导致这边的网速特别慢  
 我手动访问了http://maven.aliyun.com/nexus/content/groups/public/ 仓库地址，发现需要好多秒才能打开，maven下载有时间判定，  
 如果超过一定时间就不会下载了，所以我在网上找了几个maven地址，挑几个测试了下，修改后远程仓库后，发现瞬间快了很多，下面这些是地址，大家可以看着修改  
@@ -83,3 +83,13 @@ aliyun http://maven.aliyun.com/nexus/content/groups/public/
 maven报错的话，手动去找对应的jar包，删除掉所在的目录，然后mavenupdate一下就ok了  
 ![maven报错修复1](other/image/maven报错修复1.png)  
 ![maven报错修复2](other/image/maven报错修复2.png)  
+### springsecurity权限判断的执行流程  
+用户登陆，会被AuthenticationProcessingFilter拦截(即认证管理)，调用AuthenticationManager的实现  
+而且AuthenticationManager会调用ProviderManager来获取用户验证信息（不同的Provider调用的服务不同  
+因为这些信息可以是在数据库上，可以是在LDAP服务器上，可以是xml配置文件上等），  
+如果验证通过后会将用户的权限信息封装一个User放到spring的全局缓存SecurityContextHolder中，以备后面访问资源时使用。   
+访问资源（即授权管理），访问url时，会通过AbstractSecurityInterceptor拦截器拦截，  
+其中会调用FilterInvocationSecurityMetadataSource的方法来获取被拦截url所需的全部权限，  
+在调用授权管理器AccessDecisionManager，这个授权管理器会通过spring的全局缓存SecurityContextHolder获取用户的权限信息，  
+还会获取被拦截的url和被拦截url所需的全部权限，然后根据所配的策略（有：一票决定，一票否定，少数服从多数等），  
+如果权限足够，则返回，权限不够则报错并调用权限不足页面。  
